@@ -1,9 +1,13 @@
 const formElm = document.querySelector('#item-form');
 const inputElm = document.querySelector('#item-input');
 const ulElm = document.querySelector('#item-list');
+const clearBtn = document.querySelector('#clear');
 
 formElm.addEventListener('submit', addItem);
+ulElm.addEventListener('click', removeItem);
+clearBtn.addEventListener('click', clearItems);
 
+//Add Items
 function addItem(e) {
 
   e.preventDefault();
@@ -45,4 +49,22 @@ function createIcon(classes) {
   i.className = classes;
 
   return i;
+}
+
+//Remove Items
+function removeItem(e) {
+
+  if(e.target.parentElement.classList.contains('remove-item')) {
+    e.target.parentElement.parentElement.remove();
+  }
+
+}
+
+//Clear Items
+function clearItems() {
+
+  while(ulElm.firstChild) {
+    ulElm.removeChild(ulElm.firstChild);
+  }
+  
 }
