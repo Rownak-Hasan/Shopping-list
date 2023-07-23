@@ -2,13 +2,15 @@ const formElm = document.querySelector('#item-form');
 const inputElm = document.querySelector('#item-input');
 const ulElm = document.querySelector('#item-list');
 const clearBtn = document.querySelector('#clear');
-const filterElementDiv = document.querySelector('.filter');
+const filterElmDiv = document.querySelector('.filter');
+const filterElm = filterElmDiv.firstElementChild;
 
 checkUi();
 
 formElm.addEventListener('submit', addItem);
 ulElm.addEventListener('click', removeItem);
 clearBtn.addEventListener('click', clearItems);
+filterElm.addEventListener('input', filterItems);
 
 //Add Items
 function addItem(e) {
@@ -79,17 +81,34 @@ function clearItems() {
   
 }
 
+//Filter Items
+function filterItems(e) {
+
+  let filterTxt = e.target.value.toLowerCase();
+
+  const liElm = document.querySelectorAll('li');
+
+  liElm.forEach((item) => {
+    let itemTxt = item.firstChild.textContent.toLowerCase();
+
+    if(itemTxt.includes(filterTxt)) {
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+
+}
+
 //Clear UI by checking
 function checkUi() {
 
   if(!ulElm.firstChild) {
-    filterElementDiv.style.display = 'none';
+    filterElmDiv.style.display = 'none';
     clearBtn.style.display = 'none';
   } else {
-    filterElementDiv.style.display = 'block';
+    filterElmDiv.style.display = 'block';
     clearBtn.style.display = 'block'
   }
 
 }
-
-//Filter Items
