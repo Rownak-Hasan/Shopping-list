@@ -2,6 +2,9 @@ const formElm = document.querySelector('#item-form');
 const inputElm = document.querySelector('#item-input');
 const ulElm = document.querySelector('#item-list');
 const clearBtn = document.querySelector('#clear');
+const filterElementDiv = document.querySelector('.filter');
+
+checkUi();
 
 formElm.addEventListener('submit', addItem);
 ulElm.addEventListener('click', removeItem);
@@ -32,6 +35,8 @@ function addItem(e) {
 
   ulElm.appendChild(liElm);
 
+  checkUi();
+
   inputElm.value = '';
 
 }
@@ -55,7 +60,10 @@ function createIcon(classes) {
 function removeItem(e) {
 
   if(e.target.parentElement.classList.contains('remove-item')) {
-    e.target.parentElement.parentElement.remove();
+    if(confirm('Are you sure?')) {
+      e.target.parentElement.parentElement.remove();
+      checkUi();
+    }
   }
 
 }
@@ -66,5 +74,20 @@ function clearItems() {
   while(ulElm.firstChild) {
     ulElm.removeChild(ulElm.firstChild);
   }
+
+  checkUi();
   
+}
+
+//Clear UI by checking
+function checkUi() {
+
+  if(!ulElm.firstChild) {
+    filterElementDiv.style.display = 'none';
+    clearBtn.style.display = 'none';
+  } else {
+    filterElementDiv.style.display = 'block';
+    clearBtn.style.display = 'block'
+  }
+
 }
